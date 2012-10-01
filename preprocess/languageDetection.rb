@@ -9,9 +9,14 @@ db.results_as_hash = true
 
 db.execute('select * from lyrics where lang is null') do |row|
   print 'Checking ', row['author'], ' - ', row['song'], ': '
-  vl = row['lyrics'].lang
-  puts vl
-  db.execute("update lyrics set lang='#{vl}' where id=#{row['id']}")
+  begin
+    vl = row['lyrics'].lang
+    puts vl
+    db.execute("update lyrics set lang='#{vl}' where id=#{row['id']}")
+  rescue Exception => e
+    puts 'Error occured...'
+    puts e.message 
+  end
 end
 
 db.close
