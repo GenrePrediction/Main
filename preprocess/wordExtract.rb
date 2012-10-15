@@ -8,7 +8,7 @@ db.execute("select genre from links group by genre") do |genre_row|
  
   words = Hash.new
   
-  db.execute("SELECT links.genre, lyrics.author, lyrics.song, lyrics.lyrics FROM lyrics INNER JOIN links ON lyrics.link=links.link WHERE lang='en' and genre=#{genre_row['genre']}") do |row|
+  db.execute("SELECT links.genre, lyrics.author, lyrics.song, lyrics.lyrics FROM lyrics INNER JOIN links ON lyrics.link=links.link WHERE lang='en' and genre=#{genre_row['genre']} and (links.id % 10) != 0") do |row|
 
   begin
     puts "Checking #{row['author']} - #{row['song']}"
