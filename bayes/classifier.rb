@@ -106,7 +106,8 @@ class Classifier
       @word_probabilities[p_class][v_word] = v_num.to_f / word_count.to_f
     end
     
-    @class_probabilities[p_class] = words_in_class /@sum_of_words.to_f 
+    @class_probabilities[p_class] = 1
+    #@class_probabilities[p_class] = words_in_class /@sum_of_words.to_f 
 
     #puts "#{@class_probabilities[p_class]} x #{@word_probabilities[p_class]}" 
   end
