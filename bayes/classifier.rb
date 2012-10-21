@@ -57,8 +57,12 @@ class Classifier
     #puts "Hash: #{input_hash}"
     input_hash.each do |v_word, v_count|
       next if !@word_probabilities[category].has_key?(v_word)
+      if !@word_probabilities[category].has_key?(v_word)
+        @word_probabilities[category][v_word] = 1/@sum_of_words
+      end
+
       pr_zero = false
-      pr *= @word_probabilities[category][v_word]
+      pr *= @word_probabilities[category][v_word] ** v_count
       #puts "P(#{v_word}|#{category})=#{@word_probabilities[category][v_word]}"     
     end
 
@@ -71,6 +75,7 @@ class Classifier
 
   #this should be private
   def preprocess(input)
+
     tmp = String.new(input)
     output = Hash.new
 
@@ -122,8 +127,8 @@ class Classifier
       @word_probabilities[p_class][v_word] = v_num.to_f / word_count.to_f
     end
     
-    @class_probabilities[p_class] = 1
-    #@class_probabilities[p_class] = words_in_class /@sum_of_words.to_f 
+    #@class_probabilities[p_class] = 1
+    @class_probabilities[p_class] = words_in_class /@sum_of_words.to_f 
 
     #puts "#{@class_probabilities[p_class]} x #{@word_probabilities[p_class]}" 
   end
