@@ -13,13 +13,29 @@ class Classifier
     @sum_of_words = 0
   end
 
+  def info
+    puts "Classifier knows about #{@count_word.keys} categories and it have"
+    @count_word.keys.each { |k| puts "#{k} => #{@count_word[k].length}" }
+    puts "unique words trained"
+  end
+
   def train(p_class, p_word, count=1)
     @initialized = false
+
+    word = String.new(p_word)
+    word = self.prepare_word(word)
+    return if word == nil or word.length < 3
+
+#    puts "Training [#{p_class}] class with word: #{word}"
 
     @count_word[p_class] ||= Hash.new
     @count_word[p_class][p_word.downcase] ||= 0
     @count_word[p_class][p_word.downcase] += count
 
+  end
+
+  def prepare_word(word)
+    word.stem.downcase.gsub(/[^a-zA-Z ]/, '')
   end
 
   def classify(input)
