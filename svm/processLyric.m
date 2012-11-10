@@ -13,14 +13,14 @@ function [features vocabList] = processLyric(email_contents,vocabList)
 % word_indices = [];
 
 % ========================== Preprocess Email ===========================
-
+try
 % Find the Headers ( \n\n and remove )
 % Uncomment the following lines if you are working with raw emails with the
 % full headers
 
 % hdrstart = strfind(email_contents, ([char(10) char(10)]));
 % email_contents = email_contents(hdrstart(1):end);
-
+email_contents = num2str(email_contents);
 % Lower case
 email_contents = lower(email_contents);
 
@@ -36,16 +36,18 @@ email_contents = regexprep(email_contents, '[0-9]+', 'number');
 
 % Handle URLS
 % Look for strings starting with http:// or https://
-email_contents = regexprep(email_contents, ...
-                           '(http|https)://[^\s]*', 'httpaddr');
+%email_contents = regexprep(email_contents, ...
+%                           '(http|https)://[^\s]*', 'httpaddr');
 
 % Handle Email Addresses
 % Look for strings with @ in the middle
-email_contents = regexprep(email_contents, '[^\s]+@[^\s]+', 'emailaddr');
+%email_contents = regexprep(email_contents, '[^\s]+@[^\s]+', 'emailaddr');
 
 % Handle $ sign
-email_contents = regexprep(email_contents, '[$]+', 'dollar');
-
+%email_contents = regexprep(email_contents, '[$]+', 'dollar');
+catch
+    email_contents=' ';
+end
 
 % ========================== Tokenize Email ===========================
 

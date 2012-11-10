@@ -18,7 +18,7 @@ function stem = porterStemmer(inString)
 % argument.  This function returns the stemmed word as a string.
 
 % Lower-case string
-inString = lower(inString);
+%inString = lower(inString);
 
 global j;
 b = inString;
